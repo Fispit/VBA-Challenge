@@ -1,59 +1,85 @@
 
-Sub calculate()
-Cells(1, 10) = "Ticker"
-Cells(1, 11) = "Amount Change"
-Cells(1, 12) = "Percentage Change"
-Cells(1, 13) = "Stock Volume"
 
-usedrows = Rows.Count 'Found online on how to find how many rows are in a column
+
+Sub calculate()
+
+For s = 1 To Sheets.Count
+Dim ws As Worksheet
+
+Set ws = Worksheets(s)
+
+ws.Cells(1, 10) = "Ticker"
+ws.Cells(1, 11) = "Amount Change"
+ws.Cells(1, 12) = "Percentage Change"
+ws.Cells(1, 13) = "Stock Volume"
+
+ws.Cells(1, 14) = "Ticker"
+ws.Cells(1, 15) = "Amount Change"
+ws.Cells(1, 16) = "Percentage Change"
+ws.Cells(1, 17) = "Stock Volume"
+ws.Cells(1, 18) = "Stock Volume"
+
+
+usedrows = Rows.Count
 MsgBox (Str(usedrows))
 outputrow = 2
+outputrow2 = 2
 For i = 2 To usedrows - 1
-    ticker = Cells(i, 1)
-    nexttick = Cells(i + 1, 1)
+    ticker = ws.Cells(i, 1)
+    nexttick = ws.Cells(i + 1, 1)
     If i = usedrows - 1 Then
-            stvolume = Cells(i, 7) + stvolume
-            openvalue = Cells(i + 1, 3)
-            high = Cells(i + 1, 4)
-            low = Cells(i + 1, 5)
-            closevalue = Cells(i + 1, 6)
-            stvolume = Cells(i + 1, 7) + stvolume
-            Cells(outputrow, 10) = ticker
-            Cells(outputrow, 11) = closevalue - initialopen
+            stvolume = ws.Cells(i, 7) + stvolume
+            openvalue = ws.Cells(i + 1, 3)
+            high = ws.Cells(i + 1, 4)
+            low = ws.Cells(i + 1, 5)
+            closevalue = ws.Cells(i + 1, 6)
+            stvolume = ws.Cells(i + 1, 7) + stvolume
+            ws.Cells(outputrow, 10) = ticker
+            ws.Cells(outputrow, 11) = closevalue - initialopen
             If initialopen = 0 Then
             
             Else
-            Cells(outputrow, 12) = (closevalue - initialopen) / initialopen
+            ws.Cells(outputrow, 12) = (closevalue - initialopen) / initialopen
             End If
-            Cells(outputrow, 13) = stvolume
+            ws.Cells(outputrow, 13) = stvolume
             
     ElseIf i = 2 Then
-        initialopen = Cells(i, 3)
-        stvolume = Cells(i, 7)
+        initialopen = ws.Cells(i, 3)
+        stvolume = ws.Cells(i, 7)
     Else
 
         If ticker = nexttick Then
-            stvolume = stvolume + Cells(i, 7)
+            stvolume = stvolume + ws.Cells(i, 7)
 
         
         Else
-            openvalue = Cells(i, 3)
-            high = Cells(i, 4)
-            low = Cells(i, 5)
-            closevalue = Cells(i, 6)
-            stvolume = Cells(i, 7) + stvolume
-            Cells(outputrow, 10) = ticker
-            Cells(outputrow, 11) = closevalue - initialopen
+            openvalue = ws.Cells(i, 3)
+            high = ws.Cells(i, 4)
+            low = ws.Cells(i, 5)
+            closevalue = ws.Cells(i, 6)
+            stvolume = ws.Cells(i, 7) + stvolume
+            ws.Cells(outputrow, 10) = ticker
+            ws.Cells(outputrow, 11) = closevalue - initialopen
             If initialopen = 0 Then
             
             Else
-            Cells(outputrow, 12) = (closevalue - initialopen) / initialopen
+            ws.Cells(outputrow, 12) = ((closevalue - initialopen) / initialopen) * 100
+                If ws.Cells(outputrow, 12) > 0 Then
+                    ws.Cells(outputrow, 12).Interior.ColorIndex = 4
+                ElseIf ws.Cells(outputrow, 12) < 0 Then
+                    ws.Cells(outputrow, 12).Interior.ColorIndex = 3
+                Else
+                    ws.Cells(outputrow, 12).Interior.ColorIndex = 6
+
+                End If
+
+            
             End If
             
-            Cells(outputrow, 13) = stvolume
-            initialopen = Cells(i + 1, 3)
+            ws.Cells(outputrow, 13) = stvolume
+            initialopen = ws.Cells(i + 1, 3)
             outputrow = outputrow + 1
-            stvolume = Cells(i + 1, 7)
+            stvolume = ws.Cells(i + 1, 7)
 
 
 
@@ -69,6 +95,8 @@ For i = 2 To usedrows - 1
 
 
 Next i
+Next s
 
 End Sub
+
 
