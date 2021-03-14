@@ -39,7 +39,8 @@ For i = 2 To usedrows - 1
             If initialopen = 0 Then
             
             Else
-            ws.Cells(outputrow, 12) = (closevalue - initialopen) / initialopen
+            percentagechange = ((closevalue - initialopen) / initialopen) * 100
+            ws.Cells(outputrow, 12) = STR(percentagechange)+" %"
             End If
             ws.Cells(outputrow, 13) = stvolume
     ElseIf i = 2 Then
@@ -60,7 +61,7 @@ For i = 2 To usedrows - 1
         
             Else
             percentagechange = ((closevalue - initialopen) / initialopen) * 100
-            ws.Cells(outputrow, 12) = percentagechange
+            ws.Cells(outputrow, 12) = STR(percentagechange)+" %"
                 If ws.Cells(outputrow, 12) > 0 Then
                     ws.Cells(outputrow, 12).Interior.ColorIndex = 4
                 ElseIf ws.Cells(outputrow, 12) < 0 Then
