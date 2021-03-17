@@ -21,7 +21,7 @@ ws.Cells(4, 15) = "Stock Volume"
 greatestincrease = 0
 greatestdecrease = 0
 maxvolume = 0
-usedrows = ws.Rows.Count
+usedrows = ws.Cells(Rows.Count, 1).End(xlUp).Row
 outputrow = 2
 
 For i = 2 To usedrows - 1
